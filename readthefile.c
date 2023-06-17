@@ -9,7 +9,7 @@ typedef struct Skills_t {
 typedef struct Contributors_t {
     int nbr_skills;
     char name[21];
-    Skills_t* skills;
+    Skills_t *skills;
 } Contributors_t;
 
 typedef struct Roles_t {
@@ -26,9 +26,9 @@ typedef struct Projects_t {
     char name[21];
 } Projects_t;
 
-int main() {
+int main(int argc, char *argv[]) {
     FILE* file;
-    file = fopen("/path/to/your_file.txt", "r");
+    file = fopen(argv[1], "r");
 
     if (file == NULL) {
         printf("There's no file\n");
@@ -37,46 +37,43 @@ int main() {
 
     int nbrContributors;
     fscanf(file, "%d", &nbrContributors);
-    Contributors_t* contributors = (Contributors_t*)malloc(nbrContributors * sizeof(Contributors_t));
+    Contributors_t* contributors = (Contributors_t*) malloc(nbrContributors * sizeof(Contributors_t));
 
     int nbrProjects;
     fscanf(file, "%d", &nbrProjects);
-    Projects_t* projects = (Projects_t*)malloc(nbrProjects * sizeof(Projects_t));
+    Projects_t* projects = (Projects_t*) malloc(nbrProjects * sizeof(Projects_t));
     fgetc(file);
 
     for (int i = 0; i < nbrContributors; i++) {
-        Contributors_t* current_ctbr = &contributors[i];
-        fscanf(file, "%s", current_ctbr->name);
-        fscanf(file, "%d", &current_ctbr->nbr_skills);
-        current_ctbr->skills = (Skills_t*)malloc(current_ctbr->nbr_skills * sizeof(Skills_t));
+        fscanf(file, "%s", contributors[i].name); 
+        fscanf(file, "%d", &contributors[i].nbr_skills);
+        contributors[i].skills = (Skills_t*) malloc(contributors[i].nbr_skills * sizeof(Skills_t));
 
-        for (int j = 0; j < current_ctbr->nbr_skills; j++) {
-            Skills_t* current_skill = &current_ctbr->skills[j];
-            fscanf(file, "%s", current_skill->skill_name);
-            fscanf(file, "%d", &current_skill->level);
+        for (int j = 0; j < contributors[i].nbr_skills; j++) {
+            fscanf(file, "%s", contributors[i].skills[j].skill_name);
+            fscanf(file, "%d", &contributors[i].skills[j].level);
             fgetc(file);
         }
         fgetc(file);
     }
 
     for (int i = 0; i < nbrProjects; i++) {
-        Projects_t* current_project = &projects[i];
-        fscanf(file, "%s", current_project->name);
-        fscanf(file, "%d", &current_project->nbr_of_day);
-        fscanf(file, "%d", &current_project->score);
-        fscanf(file, "%d", &current_project->best_before);
-        fscanf(file, "%d", &current_project->nbr_roles);
+        fscanf(file, "%s", projects[i].name);
+        fscanf(file, "%d", &projects[i].nbr_of_day);
+        fscanf(file, "%d", &projects[i].score);
+        fscanf(file, "%d", &projects[i].best_before);
+        fscanf(file, "%d", &projects[i].nbr_roles);
 
-        current_project->roles = (Roles_t*)malloc(current_project->nbr_roles * sizeof(Roles_t));
-        for (int j = 0; j < current_project->nbr_roles; j++) {
-            Roles_t* current_role = &current_project->roles[j];
-            fscanf(file, "%s", current_role->name);
-            fscanf(file, "%d", &current_role->level);
+      	projects[i].roles = (Roles_t*) malloc(projects[i].nbr_roles * sizeof(Roles_t));
+        for (int j = 0; j < projects[i].nbr_roles; j++) {
+            fscanf(file, "%s", projects[i].roles[j].name);
+            fscanf(file, "%d", &projects[i].roles[j].level);
             fgetc(file);
         }
     }
 
     fclose(file);
+    
     return 0;
 }
 
