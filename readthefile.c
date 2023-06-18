@@ -3,13 +3,13 @@
 #include <string.h>
 
 struct Contributor{
-	char* name;
+	char name[21];
     	int level;
 	struct Contributor* next;
 };
 
 struct Skills{
-	char* skill_name;
+	char skill_name[21];
     	struct Contributor* ctbrNames;
     	struct Skills* next;
 };
@@ -71,9 +71,6 @@ void add_contributors(struct Contributor** head_add, char* name, int niveau) {
         parcours->next = newNode;
     }
 }
-
-
-
 
 int searchSkill(struct Skills* head, char* skillName){
 	struct Skills* parcours = head;
@@ -165,3 +162,4 @@ int main(int argc, char *argv[]){
     
     return 0;
 }
+
