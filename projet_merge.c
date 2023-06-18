@@ -28,6 +28,11 @@ struct Projects{
     char name[21];
 };
 
+typedef struct Output_t{
+	int* roleHashtag;
+	int* ctbrHashtag;
+} output;
+
 
 //This function will help us each time we find a new skill to add to the linked list. 
 void add_skills(struct Skills** head_add, char* skillName) {
@@ -206,9 +211,6 @@ void mergeSort1(struct Skills** head) {
 
 
 
-
-
-
 int main(int argc, char *argv[]){
     FILE* file;
     file = fopen(argv[1], "r");
@@ -279,6 +281,12 @@ int main(int argc, char *argv[]){
   mergeSort(&(ptr_skills->ctbrNames));
  
 //Now that we've sorted our linked lists, let's assign now the roles to the contributors
+
+// Array to track project completion status
+    int completed[numProjects];
+    for (int i = 0; i < numProjects; i++)
+        completed[i] = 0;
+    
 
  
  
